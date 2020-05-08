@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	pb "github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
+	"github.com/zees-dev/go-twirp/pkg/http/rest"
+	"github.com/zees-dev/go-twirp/pkg/storage"
 	"github.com/zees-dev/go-twirp/pkg/storage/memory"
 	"github.com/zees-dev/go-twirp/pkg/todo"
 )
@@ -18,23 +19,19 @@ const (
 )
 
 func main() {
-	// set up storage
 	storageType := Memory // this could be a flag; hardcoded here for simplicity
 
-	var todoSvc todo.Service
+	var storage storage.Repository
 
 	switch storageType {
 	case Memory:
-		storage := memory.NewStorage()
-		todoSvc = todo.NewService(storage)
+		storage = memory.NewStorage()
 	}
 
-	// You can use any mux you like - NewHelloWorldServer gives you an http.Handler.
-	mux := http.NewServeMux()
-	// The generated code includes a method, PathPrefix(), which
-	// can be used to mount your service on a mux.
-	twirpToDoHandler := pb.NewToDoServiceServer(todo.NewServer(todoSvc), nil)
-	mux.Handle(twirpToDoHandler.PathPrefix(), twirpToDoHandler)
+	todoSvc := todo.NewService(storage)
+	todoServer := todo.NewServer(todoSvc)
+	handler := rest.NewTwirpMux(todoServer)
+	mux := handler.Routes()
 
 	log.Printf("server listening on port %v...", 8080)
 	err := http.ListenAndServe(":8080", mux)

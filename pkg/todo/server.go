@@ -2,21 +2,19 @@ package todo
 
 import (
 	"context"
-	"log"
 
 	pb "github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
 )
 
-type server struct {
+type Server struct {
 	svc Service
 }
 
-func NewServer(s Service) *server {
-	return &server{s}
+func NewServer(s Service) *Server {
+	return &Server{s}
 }
 
-func (s *server) Create(ctx context.Context, req *pb.CreateRequest) (*pb.CreateResponse, error) {
-	log.Println(req.ToDo)
+func (s *Server) Create(ctx context.Context, req *pb.CreateRequest) (*pb.CreateResponse, error) {
 	id, err := s.svc.CreateTodo(req.ToDo)
 	if err != nil {
 		return nil, err
@@ -24,7 +22,7 @@ func (s *server) Create(ctx context.Context, req *pb.CreateRequest) (*pb.CreateR
 	return &pb.CreateResponse{Id: id}, nil
 }
 
-func (s *server) Read(ctx context.Context, req *pb.ReadRequest) (*pb.ReadResponse, error) {
+func (s *Server) Read(ctx context.Context, req *pb.ReadRequest) (*pb.ReadResponse, error) {
 	todo, err := s.svc.ReadTodo(req.Id)
 	if err != nil {
 		return nil, err
@@ -32,7 +30,7 @@ func (s *server) Read(ctx context.Context, req *pb.ReadRequest) (*pb.ReadRespons
 	return &pb.ReadResponse{ToDo: todo}, nil
 }
 
-func (s *server) Update(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
+func (s *Server) Update(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
 	todo, err := s.svc.UpdateTodo(req.ToDo)
 	if err != nil {
 		return nil, err
@@ -40,7 +38,7 @@ func (s *server) Update(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateR
 	return &pb.UpdateResponse{Updated: todo.Id}, nil
 }
 
-func (s *server) Delete(ctx context.Context, req *pb.DeleteRequest) (*pb.DeleteResponse, error) {
+func (s *Server) Delete(ctx context.Context, req *pb.DeleteRequest) (*pb.DeleteResponse, error) {
 	id, err := s.svc.DeleteTodo(req.Id)
 	if err != nil {
 		return nil, err
@@ -48,7 +46,7 @@ func (s *server) Delete(ctx context.Context, req *pb.DeleteRequest) (*pb.DeleteR
 	return &pb.DeleteResponse{Deleted: id}, nil
 }
 
-func (s *server) ReadAll(ctx context.Context, req *pb.ReadAllRequest) (*pb.ReadAllResponse, error) {
+func (s *Server) ReadAll(ctx context.Context, req *pb.ReadAllRequest) (*pb.ReadAllResponse, error) {
 	todoList, err := s.svc.ReadAll()
 	if err != nil {
 		return nil, err

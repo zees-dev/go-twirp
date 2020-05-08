@@ -12,6 +12,7 @@ clean:
 
 test:
 	echo "todo testing..."
+	# go test ./… -v
 
 docker-up:
 	echo "todo docker-compose up --build"
