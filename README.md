@@ -55,7 +55,7 @@ go run main.go
 ### Clients
 
 Clients can also be generated from proto files.\
-The magic of Twirp however is that it also supports HTTP 1.1 - hence allowing you to call the endpoints via curl (in addition to protobuf)
+The magic of Twirp however is that it also supports HTTP 1.1 - hence allowing you to call RPC endpoints via curl (in addition to protobuf)
 
 ### cURL
 
@@ -119,7 +119,7 @@ curl -i \
 - [x] Create DB (in-memory) to store db (this is mock)
 - [x] Complete REST handlers
 - [x] Implement interfaces and integrate with DB
-- [ ] Readme completion
+- [x] Readme completion
 - [ ] Docker
 - [ ] Testing
 - [x] Makefile
@@ -128,3 +128,7 @@ curl -i \
 - [ ] Godoc reference (badge)
 - [ ] Sourcegraph reference (badge)
 - [ ] Build reference (badge)
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
