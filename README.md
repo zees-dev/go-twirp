@@ -127,6 +127,7 @@ CGO_ENABLED=0 go test ./... -v
 - [x] Readme completion
 - [x] Docker
 - [x] Testing
+- [ ] Perform benchmarks to compare REST calls and native RPC calls on API
 - [x] Makefile
 - [ ] Github actions (CICD)
 - [x] Goreport reference (badge)
