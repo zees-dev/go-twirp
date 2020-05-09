@@ -1,0 +1,12 @@
+
+# Project files
+.git
+.gitignore
+.dockerignore
+Dockerfile
+LICENSE
+Makefile
+README.md
+
+# Binaries
+go-twirp

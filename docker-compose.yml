@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  twirp-server:
+    build: .
+    container_name: twirp-server
+    restart: unless-stopped
+    ports:
+      - 8080:8080

@@ -122,7 +122,7 @@ CGO_ENABLED=0 go test ./... -v
 - [x] Complete REST handlers
 - [x] Implement interfaces and integrate with DB
 - [x] Readme completion
-- [ ] Docker
+- [x] Docker
 - [x] Testing
 - [x] Makefile
 - [ ] Github actions (CICD)
