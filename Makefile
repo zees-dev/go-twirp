@@ -1,4 +1,4 @@
-all: clean test gen build
+all: clean gen test build
 
 gen:
 	protoc --proto_path=$GOPATH/src:. --twirp_out=. --go_out=. ./api/proto/todo/service.proto
@@ -11,10 +11,10 @@ clean:
 	rm -rf ./pkg/http/rpc/*/*.pb.go ./pkg/http/rpc/*/*.twirp.go
 
 test:
-	CGO_ENABLED=0 go test -v
+	CGO_ENABLED=0 go test ./... -v
 
 docker-up:
-	echo "todo docker-compose up --build"
+	docker-compose up --build
 
 docker-down:
-	echo "todo docker-compose down"
+	docker-compose down
