@@ -1,5 +1,6 @@
 
 # Binaries
+go-twirp
 
 # Protoc & Twirp generated
 *.pb.go
