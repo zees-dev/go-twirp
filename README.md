@@ -111,7 +111,9 @@ curl -i \
 
 ## Testing
 
-- todo
+```sh
+CGO_ENABLED=0 go test ./... -v
+```
 
 ## TODO
 
@@ -121,7 +123,7 @@ curl -i \
 - [x] Implement interfaces and integrate with DB
 - [x] Readme completion
 - [ ] Docker
-- [ ] Testing
+- [x] Testing
 - [x] Makefile
 - [ ] Github actions (CICD)
 - [ ] Goreport reference (badge)

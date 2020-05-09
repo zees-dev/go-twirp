@@ -14,12 +14,7 @@ type storage struct {
 }
 
 func NewStorage() *storage {
-	return &storage{
-		todos: []*pb.ToDo{
-			&pb.ToDo{Id: 1, Title: "First", Description: "inital item in todo list"},
-		},
-		todoCounter: 1,
-	}
+	return &storage{}
 }
 
 func (s *storage) AddTodo(todo *pb.ToDo) (uint64, error) {

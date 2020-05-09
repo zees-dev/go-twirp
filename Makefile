@@ -11,8 +11,7 @@ clean:
 	rm -rf ./pkg/http/rpc/*/*.pb.go ./pkg/http/rpc/*/*.twirp.go
 
 test:
-	echo "todo testing..."
-	# go test ./… -v
+	CGO_ENABLED=0 go test -v
 
 docker-up:
 	echo "todo docker-compose up --build"
