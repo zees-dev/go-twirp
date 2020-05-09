@@ -29,8 +29,7 @@ func main() {
 	}
 
 	todoSvc := todo.NewService(storage)
-	todoServer := todo.NewServer(todoSvc)
-	handler := rest.NewTwirpMux(todoServer)
+	handler := rest.NewTwirpMux(todoSvc)
 	mux := handler.Routes()
 
 	log.Printf("server listening on port %v...", 8080)

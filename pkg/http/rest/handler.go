@@ -3,15 +3,15 @@ package rest
 import (
 	"net/http"
 
+	"github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
 	pb "github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
-	"github.com/zees-dev/go-twirp/pkg/todo"
 )
 
 type twirpMux struct {
-	s *todo.Server
+	s todo.ToDoService
 }
 
-func NewTwirpMux(s *todo.Server) *twirpMux {
+func NewTwirpMux(s todo.ToDoService) *twirpMux {
 	return &twirpMux{s}
 }
 

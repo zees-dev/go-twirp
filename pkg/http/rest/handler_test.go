@@ -19,8 +19,7 @@ func getHTTPHandler() http.Handler {
 	storage.AddTodo(todoItem)
 
 	todoSvc := todo.NewService(storage)
-	todoServer := todo.NewServer(todoSvc)
-	handler := NewTwirpMux(todoServer)
+	handler := NewTwirpMux(todoSvc)
 	mux := handler.Routes()
 	return mux
 }

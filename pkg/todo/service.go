@@ -1,58 +1,68 @@
 package todo
 
 import (
+	"context"
 	"errors"
 	"strings"
 
+	"github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
 	pb "github.com/zees-dev/go-twirp/pkg/http/rpc/todo"
 	"github.com/zees-dev/go-twirp/pkg/storage"
 )
-
-type Service interface {
-	CreateTodo(*pb.ToDo) (uint64, error)
-	ReadTodo(uint64) (*pb.ToDo, error)
-	UpdateTodo(*pb.ToDo) (*pb.ToDo, error)
-	DeleteTodo(uint64) (uint64, error)
-	ReadAll() ([]*pb.ToDo, error)
-}
 
 type service struct {
 	todoR storage.Repository
 }
 
-func NewService(r storage.Repository) Service {
+func NewService(r storage.Repository) todo.ToDoService {
 	return &service{r}
 }
 
-func (s *service) CreateTodo(todo *pb.ToDo) (uint64, error) {
+func (s *service) Create(ctx context.Context, req *pb.CreateRequest) (*pb.CreateResponse, error) {
 	todoList, err := s.todoR.ReadAll()
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	for _, td := range todoList {
-		if strings.EqualFold(td.Title, todo.Title) {
-			return 0, errors.New("todo with same title already exists in the database")
+		if strings.EqualFold(td.Title, req.ToDo.Title) {
+			return nil, errors.New("todo with same title already exists in the database")
 		}
 	}
-	id, err := s.todoR.AddTodo(todo)
+	id, err := s.todoR.AddTodo(req.ToDo)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
-	return id, nil
+	return &pb.CreateResponse{Id: id}, nil
 }
 
-func (s *service) ReadTodo(id uint64) (*pb.ToDo, error) {
-	return s.todoR.ReadTodo(id)
+func (s *service) Read(ctx context.Context, req *pb.ReadRequest) (*pb.ReadResponse, error) {
+	todo, err := s.todoR.ReadTodo(req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.ReadResponse{ToDo: todo}, nil
 }
 
-func (s *service) UpdateTodo(todo *pb.ToDo) (*pb.ToDo, error) {
-	return s.todoR.UpdateTodo(todo)
+func (s *service) Update(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
+	todo, err := s.todoR.UpdateTodo(req.ToDo)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.UpdateResponse{Updated: todo.Id}, nil
 }
 
-func (s *service) DeleteTodo(id uint64) (uint64, error) {
-	return s.todoR.DeleteTodo(id)
+func (s *service) Delete(ctx context.Context, req *pb.DeleteRequest) (*pb.DeleteResponse, error) {
+	id, err := s.todoR.DeleteTodo(req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.DeleteResponse{Deleted: id}, nil
 }
 
-func (s *service) ReadAll() ([]*pb.ToDo, error) {
-	return s.todoR.ReadAll()
+func (s *service) ReadAll(ctx context.Context, req *pb.ReadAllRequest) (*pb.ReadAllResponse, error) {
+	todoList, err := s.todoR.ReadAll()
+	if err != nil {
+		return nil, err
+	}
+	return &pb.ReadAllResponse{ToDos: todoList}, nil
 }
