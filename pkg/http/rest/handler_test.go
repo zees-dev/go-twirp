@@ -2,6 +2,7 @@ package rest
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -74,6 +75,46 @@ func TestPostTodo(t *testing.T) {
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
+	}
+}
+
+func TestMultiplePostTodo(t *testing.T) {
+	// table-driven tests (with output): https://gobyexample.com/testing
+
+	handler := getHTTPHandler()
+
+	cases := []struct {
+		dataStr, responseStr string
+	}{
+		{`{"toDo":{"title":"Second","description":"inital item in todo list"}}`, `{"id":"2"}`},
+		{`{"toDo":{"title":"third","description":"third item"}}`, `{"id":"3"}`},
+		{`{"toDo":{"title":"4th item","description":"fourth"}}`, `{"id":"4"}`},
+	}
+
+	for i, c := range cases {
+		testname := fmt.Sprintf("%d/%d", i+1, len(cases))
+		t.Run(testname, func(t *testing.T) {
+			req, err := http.NewRequest("POST", "/twirp/ToDoService/Create", bytes.NewBuffer([]byte(c.dataStr)))
+			req.Header.Set("Content-Type", "application/json")
+			if err != nil {
+				t.Fatal(err)
+			}
+			rr := httptest.NewRecorder()
+			handler.ServeHTTP(rr, req)
+
+			// Check response status code
+			if status := rr.Code; status != http.StatusOK {
+				t.Errorf("handler returned wrong status code: got %v want %v",
+					status, http.StatusOK)
+			}
+
+			// Check the response body is what we expect.
+			expected := c.responseStr
+			if rr.Body.String() != expected {
+				t.Errorf("handler returned unexpected body: got %v want %v",
+					rr.Body.String(), expected)
+			}
+		})
 	}
 }
 
