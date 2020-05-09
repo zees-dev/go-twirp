@@ -14,6 +14,7 @@ type service struct {
 	todoR storage.Repository
 }
 
+// NewService adheres to todo protofile service by implementing the rpc methods
 func NewService(r storage.Repository) todo.ToDoService {
 	return &service{r}
 }
