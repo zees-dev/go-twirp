@@ -130,6 +130,7 @@ CGO_ENABLED=0 go test ./... -v
 - [x] Makefile
 - [ ] Github actions (CICD)
 - [x] Goreport reference (badge)
+- [ ] Complete documentation for public code (for godoc reference)
 - [ ] Godoc reference (badge)
 - [x] Sourcegraph reference (badge)
 - [ ] Build reference (badge)
