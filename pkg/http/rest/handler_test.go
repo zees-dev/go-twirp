@@ -29,10 +29,10 @@ func TestGetTodo(t *testing.T) {
 
 	var dataStr = []byte(`{"id": 1}`)
 	req, err := http.NewRequest("POST", "/twirp/ToDoService/Read", bytes.NewBuffer(dataStr))
-	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler.ServeHTTP(rr, req)
 
@@ -56,10 +56,10 @@ func TestPostTodo(t *testing.T) {
 	var dataStr = []byte(`{"toDo":{"title":"Second","description":"inital item in todo list"}}`)
 
 	req, err := http.NewRequest("POST", "/twirp/ToDoService/Create", bytes.NewBuffer(dataStr))
-	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler.ServeHTTP(rr, req)
 
@@ -94,10 +94,10 @@ func TestMultiplePostTodo(t *testing.T) {
 		testname := fmt.Sprintf("%d/%d", i+1, len(cases))
 		t.Run(testname, func(t *testing.T) {
 			req, err := http.NewRequest("POST", "/twirp/ToDoService/Create", bytes.NewBuffer([]byte(c.dataStr)))
-			req.Header.Set("Content-Type", "application/json")
 			if err != nil {
 				t.Fatal(err)
 			}
+			req.Header.Set("Content-Type", "application/json")
 			rr := httptest.NewRecorder()
 			handler.ServeHTTP(rr, req)
 
@@ -123,10 +123,10 @@ func TestUpdateTodo(t *testing.T) {
 	var dataStr = []byte(`{"toDo":{"id": "1", "title":"First","description":"changed item in todo list"}}`)
 
 	req, err := http.NewRequest("POST", "/twirp/ToDoService/Update", bytes.NewBuffer(dataStr))
-	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler.ServeHTTP(rr, req)
 
@@ -150,10 +150,10 @@ func TestDeleteTodo(t *testing.T) {
 	var dataStr = []byte(`{"id": 1}`)
 
 	req, err := http.NewRequest("POST", "/twirp/ToDoService/Delete", bytes.NewBuffer(dataStr))
-	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler.ServeHTTP(rr, req)
 
@@ -177,10 +177,10 @@ func TestGetAllTodos(t *testing.T) {
 	var dataStr = []byte(`{}`)
 
 	req, err := http.NewRequest("POST", "/twirp/ToDoService/ReadAll", bytes.NewBuffer(dataStr))
-	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		t.Fatal(err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler.ServeHTTP(rr, req)
 

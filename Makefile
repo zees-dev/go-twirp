@@ -11,7 +11,10 @@ clean:
 	rm -rf ./pkg/http/rpc/*/*.pb.go ./pkg/http/rpc/*/*.twirp.go
 
 test:
-	CGO_ENABLED=0 go test ./... -v
+	go test ./... -v
+
+bench:
+	go test -bench=.
 
 docker-up:
 	docker-compose up --build

@@ -116,7 +116,31 @@ curl -i \
 ## Testing
 
 ```sh
-CGO_ENABLED=0 go test ./... -v
+go test ./... -v
+```
+
+## Benchmarking
+
+A benchmark has been provided which compares REST client performance against Protobuf client using provided [benchmark file](./benchmark_test.go).\
+In this benchmark an in-memory HTTP server is initialized which serves the twirp API; we benchmark client REST and Protobuf requests against this API.
+
+According to the benchmarks, the protobuf requests appear to be 10-15% faster than REST based client requests against the API.
+
+```sh
+go test -bench=.
+goos: darwin
+goarch: amd64
+pkg: github.com/zees-dev/go-twirp
+BenchmarkRestClient-8              13839             83063 ns/op
+BenchmarkRPCClient-8               17268             69278 ns/op
+PASS
+ok      github.com/zees-dev/go-twirp    4.124s
+```
+
+### Run benchmark
+
+```sh
+go test -bench=.
 ```
 
 ## TODO
@@ -128,7 +152,7 @@ CGO_ENABLED=0 go test ./... -v
 - [x] Readme completion
 - [x] Docker
 - [x] Testing
-- [ ] Perform benchmarks to compare REST calls and native RPC calls on API
+- [x] Perform benchmarks to compare REST calls and native RPC calls on API
 - [x] Makefile
 - [ ] Github actions (CICD)
 - [x] Goreport reference (badge)
