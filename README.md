@@ -1,6 +1,7 @@
 # Go Twirp
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/zees-dev/go-twirp)](https://goreportcard.com/report/github.com/zees-dev/go-twirp)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/zees-dev/go-twirp)
 [![Sourcegraph](https://sourcegraph.com/github.com/zees-dev/go-twirp/-/badge.svg)](https://sourcegraph.com/github.com/zees-dev/go-twirp?badge)
 
 A lightweight rpc server that exposes HTTP 1.1 REST endpoints via use of [Twirp](https://twitchtv.github.io/twirp/).
@@ -132,7 +133,7 @@ CGO_ENABLED=0 go test ./... -v
 - [ ] Github actions (CICD)
 - [x] Goreport reference (badge)
 - [ ] Complete documentation for public code (for godoc reference)
-- [ ] Godoc reference (badge)
+- [x] Godoc reference (badge)
 - [x] Sourcegraph reference (badge)
 - [ ] Build reference (badge)
 - [ ] Code coverage reference (badge)
